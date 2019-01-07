@@ -1,0 +1,15 @@
+import com.mk.core.MKCharacter
+
+model {
+    MKCharacter character
+}
+
+json g.render(character, [expand: ['item'], excludes: ['id', 'item']]) {
+    if (character.item) {
+        item {
+            powerLevel character.item.powerLevel
+            name character.item.name
+        }
+
+    }
+}

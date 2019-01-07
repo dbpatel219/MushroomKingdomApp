@@ -1,0 +1,7 @@
+import com.mk.core.MKCharacter
+
+model {
+    Iterable<MKCharacter> characters
+}
+
+json tmpl.character(characters)

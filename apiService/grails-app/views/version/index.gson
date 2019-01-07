@@ -1,0 +1,7 @@
+model {
+    String version
+}
+
+json {
+    version version
+}

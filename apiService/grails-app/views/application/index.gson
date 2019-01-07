@@ -1,0 +1,9 @@
+import grails.core.*
+
+model {
+	GrailsApplication grailsApplication
+}
+
+json {
+    appversion grailsApplication.metadata
+}
