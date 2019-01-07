@@ -1,0 +1,446 @@
+{
+	"info": {
+		"_postman_id": "8cd46601-ce8d-4094-b17d-c024ee03447a",
+		"name": "MKApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Examples",
+			"item": [
+				{
+					"name": "Authenticated",
+					"item": [
+						{
+							"name": "Characters",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}api/characters",
+									"host": [
+										"{{baseUrl}}api"
+									],
+									"path": [
+										"characters"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": ""
+										}
+									]
+								},
+								"description": "List all the characters in the mushroomkingdom"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "634ace8d-62db-474b-838c-1ab671c1da69",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "676019a9-4f98-4453-a615-cc8a4b274e81",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Unauthenticated",
+					"item": [
+						{
+							"name": "Login",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"username\": \"mario\", \"password\": \"plumbingainteasy\"}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}api/login",
+									"host": [
+										"{{baseUrl}}api"
+									],
+									"path": [
+										"login"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Version",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}api/version",
+									"host": [
+										"{{baseUrl}}api"
+									],
+									"path": [
+										"version"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Version v2",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept-Version",
+										"value": "v2.0",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}api/version",
+									"host": [
+										"{{baseUrl}}api"
+									],
+									"path": [
+										"version"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "874aa5a6-06bf-4bb4-8f64-bc288dd6167d",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "51556280-9213-4234-81d5-bbcfbe83b6b8",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		},
+		{
+			"name": "Tests",
+			"item": [
+				{
+					"name": "Authenticated",
+					"item": [
+						{
+							"name": "Character List Test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "abf2667d-0e3b-42b8-b230-31ffcf4e9040",
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Bowser is a bad guy\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var findBowser = jsonData.find((chars) => chars.name === pm.globals.get(\"mkChar\"));",
+											"",
+											"    pm.expect(findBowser).not.equal(undefined);",
+											"    pm.expect(findBowser.isGoodGuy).to.eql(false);",
+											"});",
+											"",
+											"pm.test(\"Toad is a good guy\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var findChar = jsonData.find((chars) => chars.name === \"Toad\");",
+											"",
+											"    pm.expect(findChar).not.equal(undefined);",
+											"    pm.expect(findChar.isGoodGuy).to.eql(true);",
+											"});",
+											"",
+											"pm.test(\"Peach has star power\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    var findMario = jsonData.find((chars) => chars.name === \"Peach\");",
+											"    pm.expect(findMario.item.name).to.eql(\"star\");",
+											"});",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}api/characters",
+									"host": [
+										"{{baseUrl}}api"
+									],
+									"path": [
+										"characters"
+									]
+								},
+								"description": "Test for Character list returning with certain characters and items"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a1549a7f-f3f9-43a4-b66f-cdc62f6e5a5e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "b3c6ed83-10bc-474e-8bbd-3da2eafa235e",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Unauthenticated",
+					"item": [
+						{
+							"name": "Application Test",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e282016a-73eb-45d5-ba12-f9f7ad9ac363",
+										"exec": [
+											"",
+											"",
+											"pm.test(\"Response time is less than 200ms\", function () {",
+											"    pm.expect(pm.response.responseTime).to.be.below(200);",
+											"});",
+											"",
+											"pm.test(\"Version is 1.0.9\", function () {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData.appversion.info.app.version).to.eql(\"1.0.9\");",
+											"}); ",
+											"",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseUrl}}/?",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										""
+									],
+									"query": [
+										{
+											"key": "sleep",
+											"value": "true",
+											"disabled": true
+										}
+									]
+								},
+								"description": "Test the application endpoint that returns the metadata about grails."
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4401e692-9ff7-4f66-bbc7-8f1e1ddb8087",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5f1acdbe-c1d7-40a5-8e5d-97df3a2c1567",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{currentAccessToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c9fd9320-b7e5-4efb-925f-0edd25a044b9",
+				"type": "text/javascript",
+				"exec": [
+					"const echoPostRequest = {",
+					"  url: pm.globals.get('baseUrl') + \"api/login\",",
+					"  method: 'POST',",
+					"  header: 'Content-Type:application/json',",
+					"  body: {",
+					"    mode: 'application/json',",
+					"    raw: JSON.stringify(",
+					"        {",
+					"        \tusername:'mario',",
+					"        \tpassword:'plumbingainteasy'",
+					"        })",
+					"  }",
+					"};",
+					"",
+					"var getToken = true;",
+					"console.log(\"Lets get a token from Toad!\")",
+					"if (!pm.environment.get('accessTokenExpiry') || ",
+					"    !pm.environment.get('currentAccessToken')) {",
+					"    console.log('Token or expiry date are missing')",
+					"} else if (pm.environment.get('accessTokenExpiry') <= (new Date()).getTime()) {",
+					"    console.log('Token is expired')",
+					"} else {",
+					"    getToken = false;",
+					"    console.log('Token and expiry date are all good');",
+					"}",
+					"",
+					"if (getToken === true) {",
+					"    pm.sendRequest(echoPostRequest, function (err, res) {",
+					"    console.log(err ? err : res.json());",
+					"        if (err === null) {",
+					"            console.log('Saving the token and expiry date')",
+					"            var responseJson = res.json();",
+					"            pm.environment.set('currentAccessToken', responseJson.access_token)",
+					"    ",
+					"            var expiryDate = new Date();",
+					"            expiryDate.setSeconds(expiryDate.getSeconds() + responseJson.expires_in);",
+					"            pm.environment.set('accessTokenExpiry', expiryDate.getTime());",
+					"        }",
+					"    });",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f6a1677a-6a28-481b-8c28-fe0b7b7fc6fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "58664012-04ce-40fb-8b77-dc1d093c4ea1",
+			"key": "currentAccessToken",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "49e13012-1bbc-4a63-ae2a-ec801870314e",
+			"key": "accessTokenExpiry",
+			"value": "",
+			"type": "string"
+		}
+	]
+}
