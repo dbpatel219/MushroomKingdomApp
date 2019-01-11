@@ -3,7 +3,7 @@ Grails Rest Profile / Spring Security (JWT) / Grails Plugin
 
 This is just an example app with the following:
 
-1. Grails 3.3.8
+1. Grails 3.3.8 (Rest Api profile)
 2. Spring Security JWT
 3. Postgres DB
 4. Grails Rest Api Profile
